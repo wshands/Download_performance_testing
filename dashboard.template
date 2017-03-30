@@ -1,0 +1,132 @@
+{
+   "meta" : {
+      "updated" : "2016-03-30T21:02:19Z",
+      "created" : "2016-03-30T01:41:57Z",
+      "expires" : "0001-01-01T00:00:00Z",
+      "canSave" : true,
+      "canEdit" : true,
+      "slug" : "icgc-storage-test",
+      "canStar" : true,
+      "type" : "db"
+   },
+   "dashboard" : {
+      "templating" : {
+         "list" : []
+      },
+      "timezone" : "browser",
+      "refresh" : false,
+      "editable" : true,
+      "tags" : [],
+      "id" : @ID@,
+      "title" : "ICGC Storage Test Dashboard @NUMBER@",
+      "schemaVersion" : 8,
+      "links" : [],
+      "timepicker" : {
+         "refresh_intervals" : [
+            "5s",
+            "10s",
+            "30s",
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h",
+            "2h",
+            "1d"
+         ],
+         "time_options" : [
+            "5m",
+            "15m",
+            "1h",
+            "6h",
+            "12h",
+            "24h",
+            "2d",
+            "7d",
+            "30d"
+         ]
+      },
+      "annotations" : {
+         "list" : []
+      },
+      "style" : "dark",
+      "version" : 19,
+      "time" : {
+         "to" : "2016-03-30T21:00:06.541Z",
+         "from" : "2016-03-30T19:47:48.655Z"
+      },
+      "sharedCrosshair" : false,
+      "rows" : [
+         {
+            "height" : "500px",
+            "editable" : true,
+            "collapse" : false,
+            "panels" : [
+               {
+                  "grid" : {
+                     "leftMin" : null,
+                     "rightMax" : null,
+                     "leftMax" : null,
+                     "rightMin" : null,
+                     "leftLogBase" : 1,
+                     "threshold2Color" : "rgba(234, 112, 112, 0.22)",
+                     "threshold2" : null,
+                     "rightLogBase" : 1,
+                     "threshold1Color" : "rgba(216, 200, 27, 0.27)",
+                     "threshold1" : null
+                  },
+                  "points" : false,
+                  "y-axis" : true,
+                  "isNew" : true,
+                  "type" : "graph",
+                  "legend" : {
+                     "values" : false,
+                     "min" : false,
+                     "show" : true,
+                     "current" : false,
+                     "avg" : false,
+                     "max" : false,
+                     "total" : false
+                  },
+                  "x-axis" : true,
+                  "span" : 12,
+                  "datasource" : null,
+                  "steppedLine" : false,
+                  "seriesOverrides" : [],
+                  "bars" : false,
+                  "nullPointMode" : "connected",
+                  "editable" : true,
+                  "id" : 2,
+                  "lines" : true,
+                  "linewidth" : 2,
+                  "title" : "Panel Title",
+                  "links" : [],
+                  "error" : false,
+                  "targets" : [
+                    @INSTANCES@
+                  ],
+                  "timeShift" : null,
+                  "y_formats" : [
+                     "bytes",
+                     "short"
+                  ],
+                  "renderer" : "flot",
+                  "timeFrom" : null,
+                  "percentage" : false,
+                  "tooltip" : {
+                     "value_type" : "cumulative",
+                     "shared" : true
+                  },
+                  "pointradius" : 5,
+                  "fill" : 1,
+                  "aliasColors" : {},
+                  "stack" : false
+               }
+            ],
+            "title" : "New row"
+         }
+      ],
+      "originalTitle" : "ICGC Storage Test",
+      "hideControls" : false
+   }
+}
