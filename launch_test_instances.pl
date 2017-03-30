@@ -37,12 +37,12 @@ for (my $i=0; $i<$rounds; $i++) {
   # user data
   # make the user data
   my $user_data_script =  encode_base64(qq|#!/bin/bash
-perl /home/ubuntu/gitroot/Download_performance/run_download.pl $download_counts $instance_type $storage_system
+perl /home/ubuntu/gitroot/Download_performance_testing/run_download.pl $download_counts $instance_type $storage_system
 shutdown -h now
 |, '');
 
 #  my $user_data_script =  encode_base64(qq|#!/bin/bash
-#perl /home/ubuntu/gitroot/Download_performance/run_download.pl $download_counts $instance_type $storage_system
+#perl /home/ubuntu/gitroot/Download_performance_testing/run_download.pl $download_counts $instance_type $storage_system
 #|, '');
 
 

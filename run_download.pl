@@ -14,10 +14,10 @@ if ($repeats < 1) { $repeats = 1; }
 
 my $manifest_url;
 if ($storage_system eq 'Redwood') {
-  $manifest_url = "https://raw.githubusercontent.com/wshands/Download_performance/feature/GMKFdownloadtest/Treehousemanifest.tsv";
+  $manifest_url = "https://raw.githubusercontent.com/wshands/Download_performance_testing/feature/GMKFdownloadtest/Treehousemanifest.tsv";
 #my $manifest_url = "https://raw.githubusercontent.com/briandoconnor/my-sandbox/develop/20160403_icgc_storage_download_test/manifest.txt";
 } else {
-  $manifest_url = "https://raw.githubusercontent.com/wshands/Download_performance/feature/GMKFdownloadtest/gdc_manifest.2017-03-28T20-00-34.619716.tsv";
+  $manifest_url = "https://raw.githubusercontent.com/wshands/Download_performance_testing/feature/GMKFdownloadtest/gdc_manifest.2017-03-28T20-00-34.619716.tsv";
 }
 
 # next setup directory
