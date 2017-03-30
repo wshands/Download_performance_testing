@@ -7,8 +7,8 @@ my ($rounds, $instances_per_round, $delay_min, $download_counts, $storage_system
 my $instance_id = "ami-f4a33794";
 my $key = "jshands_us_west";
 my $sec_group = "sg-ed9b7496";
-my $instance_type = "m4.xlarge";
-my $spot_price = "0.06";
+my $instance_type = "c4.8xlarge";
+my $spot_price = "1.00";
 
 #print "security group:$sec_group\n";
 
