@@ -14,10 +14,12 @@ if ($repeats < 1) { $repeats = 1; }
 
 my $manifest_url;
 if ($storage_system eq 'Redwood') {
-  $manifest_url = "https://raw.githubusercontent.com/wshands/Download_performance_testing/feature/GMKFdownloadtest/Treehousemanifest.tsv";
+   $manifest_url = "/home/ubuntu/Treehouse_manifest_for_download.tsv";
+#  $manifest_url = "https://raw.githubusercontent.com/wshands/Download_performance_testing/feature/GMKFdownloadtest/Treehousemanifest.tsv";
 #my $manifest_url = "https://raw.githubusercontent.com/briandoconnor/my-sandbox/develop/20160403_icgc_storage_download_test/manifest.txt";
 } else {
-  $manifest_url = "https://raw.githubusercontent.com/wshands/Download_performance_testing/feature/GMKFdownloadtest/gdc_manifest.2017-03-28T20-00-34.619716.tsv";
+   $manifest_url = "/home/ubuntu/GDC_manifest_for_download.tsv";
+#  $manifest_url = "https://raw.githubusercontent.com/wshands/Download_performance_testing/feature/GMKFdownloadtest/gdc_manifest.2017-03-28T20-00-34.619716.tsv";
 }
 
 # next setup directory
@@ -25,8 +27,12 @@ system ("mkdir -p /home/ubuntu/data");
 
 # read the manifest file and push into array
 my @d = ();
-system("curl -s $manifest_url > /tmp/manifest.txt");
-open IN, "</tmp/manifest.txt" or die;
+#system("curl -s $manifest_url > /tmp/manifest.txt");
+#open IN, "</tmp/manifest.txt" or die;
+
+open IN, "<$manifest_url" or die;
+
+
 while (my $line = <IN>) {
 #  print("$line");
   $line =~ /^$/ and next;
@@ -36,7 +42,8 @@ while (my $line = <IN>) {
   $line =~ /^id/ and next;
   my @a = split("\t+", $line);
   if ($storage_system eq 'Redwood') {
-    push @d, "$a[16]|$a[17]";
+#    push @d, "$a[16]|$a[17]";
+    push @d, "$a[20]|$a[17]";
     #print("file name:$a[16] file uuid:$a[17]\n")
   }
   else {
@@ -63,7 +70,7 @@ while($curr > 0) {
   my $index = int(rand($max));
   my $sample = $d[$index];
   my @tokens = split /\|/, $sample;
-  my $name = $tokens[0];
+  my $size = $tokens[0];
   my $oid = $tokens[1];
 
   # create touch file and upload
@@ -71,11 +78,11 @@ while($curr > 0) {
   chomp $start_time;
   open OUT, ">/home/ubuntu/$oid.tsv" or die;
 
-  if ($storage_system eq 'Redwood') {
-    print OUT "OID\t$oid\nINSTANCE\t$instance_type\nNAME\t$name\nSTART\t$start_time\n";
-  } else {
-    print OUT "OID\t$oid\nINSTANCE\t$instance_type\nSIZE\t$name\nSTART\t$start_time\n";
-  }
+#  if ($storage_system eq 'Redwood') {
+#    print OUT "OID\t$oid\nINSTANCE\t$instance_type\nNAME\t$size\nSTART\t$start_time\n";
+#  } else {
+    print OUT "OID\t$oid\nINSTANCE\t$instance_type\nSIZE\t$size\nSTART\t$start_time\n";
+#  }
   close OUT;
 
   # upload to s3
@@ -83,7 +90,7 @@ while($curr > 0) {
 
   # do download
 
-=pod
+
   my $status;
   if ($storage_system eq 'Redwood') {
     my $redwood_access_token = `cat /home/ubuntu/redwood_access_token.txt`;
@@ -99,9 +106,8 @@ while($curr > 0) {
   open OUT, ">>/home/ubuntu/$oid.tsv" or die;
   print OUT "END\t$end_time\nEXITCODE\t$status";
   close OUT;
-=cut
 
-
+=pod
   my $size;
   my $status;
   if ($storage_system eq 'Redwood') {
@@ -140,6 +146,7 @@ while($curr > 0) {
 
   close OUT;
 
+=cut
 
   # upload to s3
   system ("aws s3 rm s3://wshands-test-bucket/GMKF-storage-download-testing/$storage_system/$oid.$repeats.$instance_type.running.tsv");
