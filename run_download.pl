@@ -1,6 +1,6 @@
 use strict;
 
-my ($repeats, $instance_type, $storage_system) = @ARGV;
+my ($repeats, $instance_type, $storage_system, $AMI_instance_id) = @ARGV;
 
 if ($instance_type eq '') {
   $instance_type = "unknown";
@@ -11,6 +11,28 @@ if ($storage_system ne 'GDC' and $storage_system ne 'Redwood') {
 }
 
 if ($repeats < 1) { $repeats = 1; }
+
+#tag the instance so we can identify it on the console
+#and so we can properly display performance data in Grafana
+#for the storage system it is using
+#for more information see http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html
+my $instance_id = `curl http://169.254.169.254/latest/meta-data/instance-id`;
+
+#don't tag the instance we use to create the AMI in case we are testing on it
+if($instance_id ne $AMI_instance_id) {
+  #tag this EC2 instance so we can see on the console what storage system it is using 
+  #and tag them with an owner so they are not reaped by the sysadmin
+  my $instance_name = $storage_system . "_storage_performance";
+
+  my $status = system(qq|aws ec2 create-tags --resources $instance_id --tags Key=Owner,Value=jshands\@ucsc.edu Key=Storage_system,Value=$storage_system Key=Name,Value=$instance_name|);
+  if( $status == 0) {
+      print("Successfully tagged instance id:$instance_id.\n");
+  }
+  else {
+      print("Error could not tag instance id:$instance_id.\n");
+  }        
+}
+
 
 my $manifest_url;
 if ($storage_system eq 'Redwood') {

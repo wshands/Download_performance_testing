@@ -5,9 +5,10 @@ use JSON;
 
 # vars
 my ($rounds, $instances_per_round, $delay_min, $download_counts, $storage_system);
-my $instance_id = "ami-fc1d899c";
+my $image_id = "ami-e51a8e85";
+my $AMI_instance_id = "i-0efb3e141697f4314";
 my $key = "jshands_us_west";
-my $sec_group = "sg-ed9b7496";
+my $sec_group = "sg-f19f6e8a";
 my $instance_type = "c4.8xlarge";
 my $spot_price = "1.00";
 
@@ -37,12 +38,12 @@ for (my $i=0; $i<$rounds; $i++) {
   # user data
   # make the user data
   my $user_data_script =  encode_base64(qq|#!/bin/bash
-perl /home/ubuntu/gitroot/Download_performance_testing/run_download.pl $download_counts $instance_type $storage_system
+perl /home/ubuntu/gitroot/Download_performance_testing/run_download.pl $download_counts $instance_type $storage_system $AMI_instance_id
 shutdown -h now
 |, '');
 
 #  my $user_data_script =  encode_base64(qq|#!/bin/bash
-#perl /home/ubuntu/gitroot/Download_performance_testing/run_download.pl $download_counts $instance_type $storage_system
+#perl /home/ubuntu/gitroot/Download_performance_testing/run_download.pl $download_counts $instance_type $storage_system $AMI_instance_id
 #|, '');
 
 
@@ -52,7 +53,7 @@ shutdown -h now
   # make instance JSON, see http://docs.aws.amazon.com/cli/latest/reference/ec2/request-spot-instances.html
   open OUT, ">specification.json" or die;
   print OUT qq|{
-  "ImageId": "$instance_id",
+  "ImageId": "$image_id",
   "UserData": "$user_data_script",
   "KeyName": "$key",
   "SecurityGroupIds": [ "$sec_group" ],
@@ -90,7 +91,11 @@ shutdown -h now
   sleep($delay_min * 60);
 
   # make dashboard
-  system("perl create_dashboard.pl `date +\%s` instances.txt");
+  my $dashboard_num = `date +\%s`;
+  print("New dashboard number is:$dashboard_num");
+  system("perl create_dashboard.pl $dashboard_num instances.txt $image_id $storage_system");
+
+#  system("perl create_dashboard.pl `date +\%s` instances.txt $image_id");
 }
 
 # cleanup
