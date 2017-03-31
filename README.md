@@ -20,9 +20,11 @@ to ensure the host is terminated when it finishes its run.
 
     # testing
     perl launch_test_instances.pl --rounds 1 --instances 1 --download-counts 1 --delay-min 1
-    # production
+    # production test Redwood (default)
     perl launch_test_instances.pl --rounds 10 --instances 10 --download-counts 5 --delay-min 60
-
+    # production test GDC 
+    perl launch_test_instances.pl --rounds 10 --instances 10 --download-counts 5 --delay-min 60 --storage-system GDC
+ 
 ### run_download.pl
 
 This runs on each test host and performs one or more download tests, writing metadata back to S3.
