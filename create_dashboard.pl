@@ -5,6 +5,8 @@ use strict;
 # inputs
 my ($num, $instances_file, $image_id, $storage_system, $previousid) = @ARGV;
 
+my $instances_file = 'instances.txt';
+
 my $d = {};
 if (-e $instances_file) {
   open IN, "<$instances_file" or die;
@@ -27,12 +29,22 @@ chomp $token;
 # get information for the instances that were created from the AMI that is used
 # to run the performance tests; this will allow us to exclude all other instances
 # that are running from our performance measurements
-my $instances_list = `aws ec2 describe-instances --filters "Name=image-id,Values=$image_id Name=tag:Storage_system,Values=$storage_system" | grep -i InstanceId`;
+#my $instances_list = `aws ec2 describe-instances --filters "Name=image-id,Values=$image_id" "Name=tag:Storage_system,Values=$storage_system" | grep -i InstanceId`;
+#my $instances_list = `aws ec2 describe-instances --filters "Name=image-id,Values=$image_id" "Name=tag:Storage_system,Values=$storage_system" "Name=instance-state-name,Values=pending|running"| grep -i InstanceId`;
+#my $instances_list = `aws ec2 describe-instances --filters "Name=image-id,Values=$image_id" | grep -i InstanceId`;
+print("create dashboard:$image_id $storage_system");
+
+my $instances_list = `aws ec2 describe-instances --filters "Name=image-id,Values=$image_id" "Name=tag:Storage_system,Values=$storage_system" "Name=instance-state-name,Values=running" | grep -i InstanceId`;
+
+print("instances: $instances_list");
+
 
 my $first = 1;
 foreach my $line (split /\n/, $instances_list) {
   $line =~ /"InstanceId": "(\S+)"/;
   $d->{$1} = 1;
+
+  print("instance id:$1\n");
 }
 
 # loop over templates

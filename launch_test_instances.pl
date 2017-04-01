@@ -5,7 +5,7 @@ use JSON;
 
 # vars
 my ($rounds, $instances_per_round, $delay_min, $download_counts, $storage_system);
-my $image_id = "ami-e51a8e85";
+my $image_id = "ami-a6f661c6";
 my $AMI_instance_id = "i-0efb3e141697f4314";
 my $key = "jshands_us_west";
 my $sec_group = "sg-f19f6e8a";
@@ -31,6 +31,12 @@ if ($storage_system eq '') { $storage_system = 'Redwood'; }
 if ($storage_system ne 'GDC' and $storage_system ne 'Redwood') {
   die "Wrong storage system type; must be GDC or Redwood\n";
 }
+
+# TODO save the file of old instances in case we need it later ???
+
+#empty the instances.txt file so we start with only instances we launch
+#open( FILEHANDLE, ">instances.txt" ) or die "instances.txt: $!";
+
 
 # main loop
 for (my $i=0; $i<$rounds; $i++) {
@@ -91,9 +97,15 @@ shutdown -h now
   sleep($delay_min * 60);
 
   # make dashboard
-  my $dashboard_num = `date +\%s`;
+#  my $dashboard_num = `date +\%s`;
+  my $dashboard_num = 5;
+
   print("New dashboard number is:$dashboard_num");
-  system("perl create_dashboard.pl $dashboard_num instances.txt $image_id $storage_system");
+  #system('"perl" "create_dashboard.pl" "$dashboard_num" "instances.txt" "$image_id" "$storage_system" "0"');
+  my $output =  `perl create_dashboard.pl $dashboard_num instances.txt $image_id $storage_system 0`;
+  print $output;
+
+#  system("perl create_dashboard.pl $dashboard_num instances.txt $image_id $storage_system");
 
 #  system("perl create_dashboard.pl `date +\%s` instances.txt $image_id");
 }

@@ -9,6 +9,7 @@
       "canStar" : true,
       "type" : "db"
    },
+   "overwrite" : true,
    "dashboard" : {
       "templating" : {
          "list" : []
@@ -18,7 +19,7 @@
       "editable" : true,
       "tags" : [],
       "id" : @ID@,
-      "title" : "GMKF Storage Test Dashboard @NUMBER@",
+      "title" : "GMKF GDC Storage Test Dashboard @NUMBER@",
       "schemaVersion" : 8,
       "links" : [],
       "timepicker" : {
@@ -52,8 +53,8 @@
       "style" : "dark",
       "version" : 19,
       "time" : {
-         "to" : "2016-03-30T21:00:06.541Z",
-         "from" : "2016-03-30T19:47:48.655Z"
+         "to" : "2017-04-01T:01:06.541Z",
+         "from" : "2017-03-31T22:30:48.655Z"
       },
       "sharedCrosshair" : false,
       "rows" : [
@@ -75,7 +76,7 @@
                      "threshold1Color" : "rgba(216, 200, 27, 0.27)",
                      "threshold1" : null
                   },
-                  "points" : false,
+                  "points" : true,
                   "y-axis" : true,
                   "isNew" : true,
                   "type" : "graph",
@@ -98,7 +99,7 @@
                   "editable" : true,
                   "id" : 2,
                   "lines" : true,
-                  "linewidth" : 2,
+                  "linewidth" : 3,
                   "title" : "Panel Title",
                   "links" : [],
                   "error" : false,
@@ -126,7 +127,7 @@
             "title" : "New row"
          }
       ],
-      "originalTitle" : "GMKF Storage Test",
+      "originalTitle" : "GMKF GDC Storage Test",
       "hideControls" : false
    }
 }
