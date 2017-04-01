@@ -19,7 +19,7 @@ if ($repeats < 1) { $repeats = 1; }
 my $instance_id = `curl http://169.254.169.254/latest/meta-data/instance-id`;
 
 #don't tag the instance we use to create the AMI in case we are testing on it
-if($instance_id ne $AMI_instance_id) {
+if(($instance_id ne $AMI_instance_id) and ($AMI_instance_id ne '')) {
   #tag this EC2 instance so we can see on the console what storage system it is using 
   #and tag them with an owner so they are not reaped by the sysadmin
   my $instance_name = $storage_system . "_storage_performance";
