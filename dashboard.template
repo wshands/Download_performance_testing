@@ -19,7 +19,7 @@
       "editable" : true,
       "tags" : [],
       "id" : @ID@,
-      "title" : "GMKF GDC Storage Test Dashboard @NUMBER@",
+      "title" : "GMKF Storage Test Dashboard @NUMBER@",
       "schemaVersion" : 8,
       "links" : [],
       "timepicker" : {
@@ -127,7 +127,7 @@
             "title" : "New row"
          }
       ],
-      "originalTitle" : "GMKF GDC Storage Test",
+      "originalTitle" : "GMKF Storage Test",
       "hideControls" : false
    }
 }
