@@ -1,0 +1,29 @@
+Get the performance testing scripts
+git clone https://github.com/wshands/Download_performance_testing.git
+
+Create an EC2 where the scripts will be run with all the tools that you need installed on it; you will also need these:
+Install AWS credentials 
+Install AWS CLI
+Make changes to the script run_download.pl to make it do what you want; this script will run on each created EC2 instance; put this script on the AMI instance
+Create an AMI from the EC2 instance
+Put the AMI ID and AMI image ID along with the key pair name and security group ID in the file launch_test_instances.pl
+
+Get Grafana
+install Grafana on the machine where you will run the launch_test_instances.pl script (http://docs.grafana.org/installation/debian/) and
+launch the Grafana server
+
+On the machine running Grafana server, open port 3000 to the IP address for the machine from which you will run a browser
+Launch a browser and enter <ip address of Grafana machine running server>:3000
+Login to Grafana as the default user: admin password: admin
+
+Delete the contents of the instances.txt file; these are the EC2 instances that were previously monitored and this file will be updated later
+Run the launch_instances.pl srcipt; this will create a Grafana dashboard with the EC2 instances it launches as the things to monitor via AWS Cloudwatch, and put the instance ids in instances.txt
+Note the Grafana dashboard number that launch_instances.pl prints at the bottom of the screen each time it launches instances
+
+Select the icon at the top left of the Grafana web page and then select Dashboards
+Locate the dashboard name containing the dashboard number output by launch_instances.pl
+You should see a generic plot displayed 
+Click on graph Title and then select Edit and then select the Metrics tab 
+You may see inputs with 'A' Test metric (fake data source) under the graph
+Go to the bottom of the screen and next to Panel data source select 'Download Performance'
+You should see a performance graph displayed at this point and below that inputs with a Metric, Dimensions, and Period fields filled out
